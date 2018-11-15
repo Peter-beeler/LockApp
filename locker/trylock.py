@@ -2,7 +2,7 @@
 import os
 import pyautogui
 import time
-from config import config
+from .config import config
 
 class locker:
     
@@ -20,10 +20,10 @@ class locker:
         pyautogui.typewrite(passwd)
         pyautogui.press('enter')
 
-def main():
-    m = locker()
-    m.lock_workstation()
-    m.unlock_workstation()
+# def main():
+#     m = locker()
+#     m.lock_workstation()
+#     m.unlock_workstation()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
