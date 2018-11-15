@@ -3,9 +3,12 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
-from identify import TakePhoto, cutface
+from LockApp.identify import TakePhoto, cutface
 import cv2
 import json
+
+# TakePhoto = identify.TakePhoto
+# cutface = identify.cutface
 
 class App(QWidget):
  
@@ -98,7 +101,7 @@ class App(QWidget):
         TakePhoto('rawface.jpg')
         cutface('rawface.jpg')
 
-if __name__ == '__main__':
+def main():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
