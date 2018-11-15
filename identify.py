@@ -49,7 +49,7 @@ def COMPARE(owner,unknown):
 	owner_encoding = face_recognition.face_encodings(known_image)[0] #encode
 	unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
 
-	results = face_recognition.compare_faces([owner_encoding], unknown_encoding)
+	results = face_recognition.compare_faces([owner_encoding], unknown_encoding, 0.4)
 	if(results[0] == True):
 		print("Compare success!")
 		return 0
