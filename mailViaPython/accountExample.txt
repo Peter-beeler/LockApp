@@ -1,0 +1,10 @@
+# 从上到下：服务器名、服务器端口号、发件人邮箱、发件人密码、收件人邮箱、主体、内容、图片
+# 使用时删除前两行，并将邮箱等信息替换
+mail.ustc.edu.cn
+465
+lsssss@mail.ustc.edu.cn
+******
+1104589544@qq.com
+I am the subject
+I am the content who come to send you beauty
+beauty.jpg
