@@ -1,4 +1,5 @@
 #!/Users/peter/.virtualenvs/cv/bin/python3
+#coding=utf-8
 import face_recognition
 import cv2
 import time
@@ -7,7 +8,6 @@ import pyautogui
 
 def numberof(photopath):
 	image = face_recognition.load_image_file(photopath)
-	#打开图像
 	face_locations = face_recognition.face_locations(image)
 	return len(face_locations)
 
