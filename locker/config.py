@@ -1,5 +1,5 @@
 config = {
     'lock': ['winleft', 'l'],
-    'unlockPasswd': 'renzhenghang',
-    'protectDir': ['/home/eliasthunderdog/playground/hackathon/testdir'],
+    'unlockPasswd': 'HHSW201701lzy',
+    'protectDir': ['/home/foenix/test'],
 }

@@ -57,5 +57,5 @@ def COMPARE(owner,unknown):
 		print("Compare fail!")
 		return -1
 
-TakePhoto("owner.jpg")
-cutface("owner.jpg")
+# TakePhoto("owner.jpg")
+# cutface("owner.jpg")

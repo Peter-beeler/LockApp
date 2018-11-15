@@ -41,9 +41,9 @@ def Main(rootDir, Flag):
             return
     if(flag == 0):
         print("Current Directory Does Not Exist")
-
 if __name__ == '__main__':
     #CreateRSAKeys()
+    print("******")
     if(len(sys.argv) > 2): 
         d = sys.argv[2]
         Flag = sys.argv[1]
