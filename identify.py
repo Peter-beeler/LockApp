@@ -1,20 +1,29 @@
+#!/Users/peter/.virtualenvs/cv/bin/python3
 import face_recognition
 import cv2
 import time
 import os
 import pyautogui
 
-def FaceInPhoto(photopath):
+def numberof(photopath):
 	image = face_recognition.load_image_file(photopath)
 	#打开图像
 	face_locations = face_recognition.face_locations(image)
+	return len(face_locations)
+
+def cutface(photopath):
+	image = face_recognition.load_image_file(photopath)
+	face_locations = face_recognition.face_locations(image)
 	if(len(face_locations)!=1):
-		print("Error!There is more than one face in the picture")
 		return -1
 	else:
 		top, right, bottom, left = face_locations[0]
 		face_image = image[top:bottom,left:right]
 		cv2.imwrite(photopath,face_image)
+
+	return 0
+
+
 
 
 def TakePhoto(filename): #para 0 表示拍的时owner的照片，1表示是是当前使用者的照片
@@ -48,36 +57,5 @@ def COMPARE(owner,unknown):
 		print("Compare fail!")
 		return -1
 
-lock = 0
-while(1):
-	if(lock == 1):
-		TakePhoto("unknown.jpg")
-		if(FaceInPhoto("unknown.jpg")):
-			continue
-		if(COMPARE("owner.jpg","unknown.jpg")==0):
-			pyautogui.hotkey("esc")
-			time.sleep(1.5)
-			pyautogui.typewrite("maoyi1003")
-			pyautogui.hotkey("enter")
-			lock = 0
-		continue
-	TakePhoto("unknown.jpg")
-	number = FaceInPhoto("unknown.jpg")
-	if(number == -1):
-		pyautogui.keyDown('ctrl')
-		pyautogui.keyDown('command')
-		pyautogui.keyDown('q')
-		pyautogui.keyUp('ctrl')
-		pyautogui.keyUp('command')
-		pyautogui.keyUp('q')
-		lock = 1
-		continue
-	if(COMPARE("owner.jpg","unknown.jpg")==-1):
-		pyautogui.keyDown('ctrl')
-		pyautogui.keyDown('command')
-		pyautogui.keyDown('q')
-		pyautogui.keyUp('ctrl')
-		pyautogui.keyUp('command')
-		pyautogui.keyUp('q')
-		lock = 1
-		continue
+TakePhoto("owner.jpg")
+cutface("owner.jpg")
