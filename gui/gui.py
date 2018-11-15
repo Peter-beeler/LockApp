@@ -1,33 +1,30 @@
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
+from identify import TakePhoto, cutface
 import cv2
+import json
 
 class App(QWidget):
  
     def __init__(self):
         super().__init__()
         self.title = 'Device Guard'
-        # self.left = 10
-        # self.top = 10
-        # self.width = 640
-        # self.height = 480
-
-        # self.setTimer()
         self.setLabel()
         self.setLinedit()
         self.setTextedit()
         self.setButton()
         self.SetLayout()
-        self.cap = cv2.VideoCapture(0)
-
+        # self.cap = cv2.VideoCapture(0)
         self.initUI()
 
     def setButton(self):
+        self.takePhoto = QPushButton('take photo')
         self.submit = QPushButton("save config")
         self.submit.clicked.connect(self.save_config)
+        self.takePhoto.clicked.connect(self.getPhoto)
 
     def setTextedit(self):
         self.textedit = QTextEdit()
@@ -45,20 +42,23 @@ class App(QWidget):
     def setLabel(self):
         self.l = QLabel(self)
         self.l.setFixedSize(100, 100)
+        self.hotkey_label = QLabel('hotkey')
+        self.passwd_label = QLabel('passwd')
+        self.dirs = QLabel('directories:')
 
     def SetLayout(self):
-        hbox = QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(self.hotkey)
-        hbox.addWidget(self.passwd)
+        grid = QGridLayout()
+        grid.setSpacing(10)
 
-        vbox = QVBoxLayout()
-        vbox.addStretch(1)
-        vbox.addLayout(hbox)
-        vbox.addWidget(self.textedit)
-        vbox.addWidget(self.submit)
-        self.setLayout(vbox)
-        self.setGeometry(300,300, 640, 480)
+        grid.addWidget(self.hotkey_label,1,0)
+        grid.addWidget(self.hotkey, 1, 1)
+        grid.addWidget(self.passwd_label, 2, 0)
+        grid.addWidget(self.passwd, 2, 1)
+        grid.addWidget(self.dirs, 3, 0)
+        grid.addWidget(self.textedit, 3, 1)
+        grid.addWidget(self.submit, 4, 0)
+        grid.addWidget(self.takePhoto, 4, 1)
+        self.setLayout(grid)
 
     def start(self):
         ret, frame = self.cap.read()
@@ -80,10 +80,24 @@ class App(QWidget):
         passwd_s = self.passwd.text()
         dirs = self.textedit.toPlainText()
         dirs = dirs.split('\n')
-        print(hotkey_s)
-        print(passwd_s)
-        print(dirs)
- 
+        # print(hotkey_s)
+        # print(passwd_s)
+        # print(dirs)
+        config = {
+            'lock': hotkey_s,
+            'unlockPasswd': passwd_s,
+            'protectDir': dirs,
+        }
+        m = json.dumps(config)
+
+        f = open('config.json', 'w')
+        f.write(m)
+        f.close()
+
+    def getPhoto(self):
+        TakePhoto('rawface.jpg')
+        cutface('rawface.jpg')
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
