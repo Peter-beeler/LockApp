@@ -4,6 +4,7 @@ import time
 import subprocess
 sys.path.append('./Encrypt_And_Decrypt')
 sys.path.append('./locker')
+sys.path.append('./identify')
 import identify
 from Encrypt import Work_Encrypt
 from trylock import locker
@@ -60,9 +61,9 @@ if __name__ == '__main__':
 				l = locker()
 				l.unlock_workstation()
 			else:
-				# flag = flag + 1
-				# if flag > 5:
-				# 	Work_Encrypt("/home/foenix/test")
+				flag = flag + 1
+				if flag > 5:
+					Work_Encrypt("/home/foenix/test")
 				continue
 
 
