@@ -1,5 +1,5 @@
 config = {
     'lock': ['winleft', 'l'],
-    'unlockPasswd': 'HHSW201701lzy',
+    'unlockPasswd': 'renzhenghang',
     'protectDir': ['/home/foenix/test'],
 }
