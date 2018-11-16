@@ -1,0 +1,13 @@
+# if you want to set x gestures to unlock, this file consists of x+1 lines (1 <= x <= 3)
+# the first line specified number of gestures
+# for the next x lines, gestures are listed in order
+# pattern: gestureType direction numberOfFingers
+# gestureType: swipe, pinch
+# direction: swipe->up/down/left/right, pinch->in/out
+# numberOfFingers: swipe->3/4, pinch->2/3/4
+# do not all blank lines, they may cause errors
+# all comment lines starting with '#' need to be removed before this file is effective
+# also, file name need to be changed to 'settings.txt'
+2
+swipe up 4
+pinch in 2
