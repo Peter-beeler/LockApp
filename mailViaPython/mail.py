@@ -29,6 +29,7 @@ class email:
             self.subject = accountInfo[5]
             self.text = accountInfo[6]
             self.picture = accountInfo[7]
+            # print(self.picture)
 
     def sendMail(self):
         msg = MIMEMultipart()
@@ -41,7 +42,7 @@ class email:
         server.login(self.sender, self.password)
         server.sendmail(self.sender, self.receiver, msg.as_string())
 
-newMail = email("account.txt")
-newMail.sendMail()
+# newMail = email("account.txt")
+# newMail.sendMail()
 
 
