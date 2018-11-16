@@ -19,11 +19,3 @@ class locker:
         time.sleep(0.5)
         pyautogui.typewrite(passwd)
         pyautogui.press('enter')
-
-# def main():
-#     m = locker()
-#     m.lock_workstation()
-#     m.unlock_workstation()
-
-# if __name__ == "__main__":
-#     main()
