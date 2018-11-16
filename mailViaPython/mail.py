@@ -44,5 +44,3 @@ class email:
 
 # newMail = email("account.txt")
 # newMail.sendMail()
-
-
