@@ -64,6 +64,7 @@ if __name__ == '__main__':
 				flag = flag + 1
 				if flag > 5:
 					Work_Encrypt("/home/foenix/test")
+					break
 				continue
 
 

