@@ -1,6 +1,3 @@
-import sys
-sys.path.append('./gui')
-sys.path.append('/home/eliasthunderdog/playground/hackathon/Lockapp')
-from gui import gui
+import LockHub.gui.gui as MainGui
 
-gui.main()
+MainGui.main()

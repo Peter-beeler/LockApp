@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, \
+QTextEdit, QVBoxLayout, QMessageBox, QCheckBox
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
 from ..identify.identify import TakePhoto, cutface
 from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
+from ..Encrypt_And_Decrypt.Decrypt import work_decrypt
 import cv2
 import json
 import time
@@ -23,6 +25,7 @@ class App(QWidget):
         self.setLinedit()
         self.setTextedit()
         self.setButton()
+        self.setCheckBox()
         self.SetLayout()
         self.initUI()
 
@@ -30,9 +33,15 @@ class App(QWidget):
         self.takePhoto = QPushButton('take photo')
         self.submit = QPushButton("save config")
         self.createkeys = QPushButton('create keys')
+        self.decrypt = QPushButton('decrypt')
+        self.run = QPushButton('run')
+        self.stop = QPushButton('stop')
         self.submit.clicked.connect(self.save_config)
         self.takePhoto.clicked.connect(self.getPhoto)
         self.createkeys.clicked.connect(self.createKey)
+        self.decrypt.clicked.connect(self.decryptfile)
+        self.run.clicked.connect(self.runapp)
+        self.stop.clicked.connect(self.stopapp)
 
     def setTextedit(self):
         self.textedit = QTextEdit()
@@ -43,6 +52,11 @@ class App(QWidget):
         self.passwd.setEchoMode(QLineEdit.Password)
         self.emailedit = QLineEdit()
 
+    def setCheckBox(self):
+        self.faceidentify = QCheckBox('face recognition')
+        self.gesture = QCheckBox('gesture on touchpad')
+        self.usbunlock = QCheckBox('usb unlock')
+
     def setLabel(self):
         self.l = QLabel(self)
         self.l.setFixedSize(100, 100)
@@ -50,6 +64,7 @@ class App(QWidget):
         self.passwd_label = QLabel('passwd')
         self.dirs = QLabel('directories')
         self.emaillabel = QLabel('email')
+        self.functionlabel = QLabel('function')
 
     def SetLayout(self):
         grid = QGridLayout()
@@ -65,7 +80,14 @@ class App(QWidget):
         grid.addWidget(self.textedit, 4, 1)
         grid.addWidget(self.submit, 5, 0)
         grid.addWidget(self.takePhoto, 5, 1)
-        grid.addWidget(self.createkeys)
+        grid.addWidget(self.createkeys, 6, 0)
+        grid.addWidget(self.decrypt, 6, 1)
+        grid.addWidget(self.functionlabel, 7, 0)
+        grid.addWidget(self.faceidentify, 7, 1)
+        grid.addWidget(self.gesture, 8, 1)
+        grid.addWidget(self.usbunlock, 9, 1)
+        grid.addWidget(self.run)
+        grid.addWidget(self.stop)
         self.setLayout(grid)
 
     def initUI(self):
@@ -103,6 +125,25 @@ class App(QWidget):
         CreateRSAKeys()
         info = '密钥生成成功，目录下的 my_private_rsa_key.bin为私钥，my_public_rsa_key.pem为公钥'
         QMessageBox.information(self, '密钥构建成功', info, QMessageBox.Ok)
+
+    def decryptfile(self):
+        try:
+            f = open('./LockHub/gui/config.json')
+        except FileNotFoundError:
+            QMessageBox.critical(self, '错误', '找不到配置文件')
+        config = json.load(f)
+        f_list = config['protectDir']
+        try:
+            for filedir in f_list:
+                work_decrypt(filedir)
+        except FileNotFoundError:
+            QMessageBox.critical(self, '错误', '找不到文件，无法对其解密')
+
+    def runapp(self):
+        pass
+    
+    def stopapp(self):
+        pass
 
 
 class photoWidget(QWidget):
@@ -161,6 +202,3 @@ def main():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()
