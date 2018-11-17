@@ -64,13 +64,13 @@ def usb_main():
 	for x in new_content:
 		if(not(x in content)):
 			break
-
-	code = readcode(x)
+	sleep(3)
+	code,data = readcode(x)
 	#print(x)
 	#print(code)
 	rel,key = verification(code)
 	print(rel)
-	newpasswd(key,usbpath + "/" + x + "/code/code.txt","key.txt")
+	newpasswd(key,usbpath + "/" + x + "/code/code.txt","key.txt",data)
 	return rel,usbpath + '/' + x
 
 def unlock(filepath,codepath):
