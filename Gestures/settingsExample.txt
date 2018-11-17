@@ -11,3 +11,4 @@
 2
 swipe up 4
 pinch in 2
+swipe down 3

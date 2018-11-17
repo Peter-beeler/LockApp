@@ -5,8 +5,7 @@ import os
 class gestureSettings:
 	def __init__(self):
 		self.num = 0
-		self.list = []
-	
+		self.list = [] # list of gestures to unlock and gesture to lock
 	def setNumberOfsteps(self, num):
 		self.num = num
 	
@@ -22,7 +21,7 @@ class gestureSettings:
 			if self.num > 3 or self.num < 1:
 				print("gesture number error!")
 				return -1
-			if len(fileContent) != self.num:
+			if len(fileContent) != self.num + 1:
 				print("file format error!")
 				return -1
 			for item in fileContent:
@@ -31,11 +30,11 @@ class gestureSettings:
 		return 0
 	
 	def writeMachine(self):
-		mappingList = ['', '[[0, 1]]', '[[0, 1, 0], [0, 0, 2]]', '[[0, 1, 0, 0], [0, 0, 2, 0], [0, 0, 0, 3]]']
+		mappingList = ['', '[[0, 1, 2]]', '[[0, 1, 0, 3], [0, 0, 2, 3]]', '[[0, 1, 0, 0, 4], [0, 0, 2, 0, 4], [0, 0, 0, 3, 4]]']
 		if os.path.exists("machine.py"):
 			os.remove("machine.py")
 		machine = open("machine.py", 'w+')
-		machine.write('import sys\n')
+		machine.write('import sys\nimport os\n')
 		machine.write('mapping = ' + mappingList[self.num] + '\n')
 		machine.write('successState = ' + str(self.num) + '\n')
 		try:
@@ -58,7 +57,7 @@ class gestureSettings:
 		headContent = head.read()
 		config.write(headContent)
 		head.close()
-		for i in range(self.num):
+		for i in range(self.num + 1):
 			config.write('gesture ' + self.list[i] + '\tpython3 machine.py ' + str(i + 1) + '\n')
 		config.close()
 
