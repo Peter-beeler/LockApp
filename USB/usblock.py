@@ -18,7 +18,7 @@ def readcode(x):
 	f = open(codepath)
 	code = f.readline()
 	f.close()
-	return code
+	return code,data
 
 def verification(code):
 	file = open("key.txt")
@@ -33,7 +33,7 @@ def verification(code):
 	file.close()
 	return rel,key
 
-def newpasswd(key,usbfile,localfile):
+def newpasswd(key,usbfile,localfile,keydata):
 	rad = random.random()
 	rad = int(1000*rad)
 	rad = rad % 10
@@ -87,4 +87,3 @@ def unlock(path):
 	datakey =open(x).read()
 	Work_Decrypt(path,datakey)
 
-usb_main()
