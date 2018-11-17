@@ -71,19 +71,10 @@ def usb_main():
 	rel,key = verification(code)
 	print(rel)
 	newpasswd(key,usbpath + "/" + x + "/code/code.txt","key.txt")
-	return rel
+	return rel,usbpath + '/' + x
 
-def unlock(path):
-	while(1):
-		new_content = os.listdir(usbpath)
-		if(new_content == content):
-			continue
-		else:
-			break
-	for x in new_content:
-		if(not(x in content)):
-			break
-	x = usbpath + "/" + x + "/code/my_private_rsa_key.bin"
+def unlock(filepath,codepath):
+	x = codepath + "/code/my_private_rsa_key.bin"
 	datakey =open(x).read()
-	Work_Decrypt(path,datakey)
+	Work_Decrypt(filepath,datakey)
 
