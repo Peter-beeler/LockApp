@@ -7,11 +7,13 @@ sys.path.append('./Encrypt_And_Decrypt')
 sys.path.append('./locker')
 sys.path.append('./identify')
 sys.path.append("./mailViaPython")
+sys.path.append('./BlueTooth')
 import identify
 from Encrypt import Work_Encrypt
 from trylock import locker
 from mail import email
 from config import config
+from dbus_1 import Query
 from pynput.keyboard import Listener
 
 flag = 0
@@ -27,21 +29,24 @@ def press(key):
 	if(("Key.enter" in str(key)) and tmp_flag > 10):
 		flag = flag + 1
 		time.sleep(0.5)
-		os.system("gnome-screensaver-command -l")
+		l = locker()
+		l.lock_workstation()
 		return False
 
-if __name__ == '__main__':
+def Face():
 	while True:
-		lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
-		print(str(lzy))
-		if("The screensaver is inactive" in str(lzy)):#unlock
+		# lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
+		# print(str(lzy))
+		lzy = Query()
+		if(lzy == 0):#unlock
 			identify.TakePhoto("unknow.jpg")
 			x = identify.COMPARE("owner.jpg", "unknow.jpg")
 			if x == 0:
 				time.sleep(2)
 				continue
 			else:
-				os.system("gnome-screensaver-command -l")
+				l = locker()
+				l.lock_workstation()
 		else:#lock
 			with Listener(on_press = press) as listener:					
 				listener.join()
@@ -54,7 +59,8 @@ if __name__ == '__main__':
 				time.sleep(1)
 			else:
 				os.system("notify-send 'Wrong!'")
-				os.system("gnome-screensaver-command -l")
+				l = locker()
+				l.lock_workstation()
 				time.sleep(1)
 				flag = flag + 1
 				if flag > 4:

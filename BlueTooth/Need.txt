@@ -1,0 +1,7 @@
+蓝牙接口：
+    调用 Start_BlueTooth()
+蓝牙配置：
+    需要将硬件地址写入config
+    调用方式
+    hciconfig scan
+    搜索自己的设备并将硬件码写入config

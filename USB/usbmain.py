@@ -3,22 +3,24 @@ import os
 import time
 import subprocess
 import cv2
-import pyautogui
-sys.path.append('./Encrypt_And_Decrypt')
-sys.path.append('./locker')
-sys.path.append('./identify')
-sys.path.append("./mailViaPython")
-import identify
+sys.path.append('../Encrypt_And_Decrypt')
+sys.path.append('../locker')
+sys.path.append('../identify')
+sys.path.append("../mailViaPython")
+sys.path.append("../USB")
+sys.path.append("../BlueTooth")
+import usblock
 from Encrypt import Work_Encrypt
-from trylock import locker
+#from trylock import locker
 from mail import email
 from config import config
 from pynput.keyboard import Listener
+from dbus_1 import Query
 
 flag = 0
 tmp_flag = 0
 
-
+'''
 def press(key):
 	global flag, tmp_flag
 	tmp_flag = tmp_flag + 1
@@ -28,35 +30,35 @@ def press(key):
 	if(("Key.enter" in str(key)) and tmp_flag > 10):
 		flag = flag + 1
 		time.sleep(0.5)
-		pyautogui.typewrite("maoyi1003")
-		pyautogui.press("enter")
+		l = locker()
+		l.lock_workstation()
 		return False
+rel,path = usblock.usb_main()
+print(rel)
+'''
 
+'''
 if __name__ == '__main__':
 	while True:
-		lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
-		print(str(lzy))
-		if("The screensaver is inactive" in str(lzy)):#unlock
-			identify.TakePhoto("unknow.jpg")
-			x = identify.COMPARE("owner.jpg", "unknow.jpg")
-			if x == 0:
-				time.sleep(2)
-				continue
-			else:
-				os.system("gnome-screensaver-command -l")
+		# lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
+		# print(str(lzy))
+		lzy = Query()
+		if(lzy == 0):#unlock
+			continue
 		else:#lock
 			with Listener(on_press = press) as listener:					
 				listener.join()
-			identify.TakePhoto("unknow.jpg")
-			x = identify.COMPARE("owner.jpg", "unknow.jpg")
-			if x == 0:
+			rel,path = usblock.usb_main()
+
+			if x == True:
 				l = locker()
 				l.unlock_workstation()
 				flag = 0
 				time.sleep(1)
 			else:
 				os.system("notify-send 'Wrong!'")
-				os.system("gnome-screensaver-command -l")
+				l = locker()
+				l.lock_workstation()
 				time.sleep(1)
 				flag = flag + 1
 				if flag > 4:
@@ -65,3 +67,4 @@ if __name__ == '__main__':
 					Email.sendMail()
 					break
 				continue
+'''
