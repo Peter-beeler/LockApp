@@ -30,7 +30,7 @@ class gestureSettings:
 		return 0
 	
 	def writeMachine(self):
-		mappingList = ['', '[[0, 1, 2]]', '[[0, 1, 0, 3], [0, 0, 2, 3]]', '[[0, 1, 0, 0, 4], [0, 0, 2, 0, 4], [0, 0, 0, 3, 4]]']
+		mappingList = ['', '[[0, 1, 2]]', '[[0, 1, 0, 3], [0, 1, 2, 3]]', '[[0, 1, 0, 0, 4], [0, 1, 2, 0, 4], [0, 1, 0, 3, 4]]']
 		if os.path.exists("machine.py"):
 			os.remove("machine.py")
 		machine = open("machine.py", 'w+')

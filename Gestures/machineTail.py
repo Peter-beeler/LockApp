@@ -22,6 +22,7 @@ with open("state.txt", 'r+') as f:
 		
 		# but do not delete the following line!
 	elif(newState == successState + 1):
-		os.system("gnome-screensaver-command -l")
+		l = locker()
+		l.lock_workstation()
 	f.seek(0)
 	f.write(str(newState))
