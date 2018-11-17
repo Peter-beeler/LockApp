@@ -5,7 +5,7 @@
 # gestureType: swipe, pinch
 # direction: swipe->up/down/left/right, pinch->in/out
 # numberOfFingers: swipe->3/4, pinch->2/3/4
-# do not all blank lines, they may cause errors
+# do not add blank lines, they may cause errors
 # all comment lines starting with '#' need to be removed before this file is effective
 # also, file name need to be changed to 'settings.txt'
 2
