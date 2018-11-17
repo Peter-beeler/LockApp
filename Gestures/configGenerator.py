@@ -1,3 +1,5 @@
+
+
 import os
 
 class gestureSettings:
@@ -8,9 +10,9 @@ class gestureSettings:
 	def setNumberOfsteps(self, num):
 		self.num = num
 	
-	def readSettings(self):
+	def readSettings(self, filePath):
 		try:
-			file = open('settings.txt', 'r')
+			file = open(filePath, 'r')
 		except IOError:
 			print("filed to open! (settings.txt)")
 			return -1
@@ -84,10 +86,10 @@ def moveConfig():
 # a example of config and machine generation
 stateInit()
 test = gestureSettings()
-test.readSettings()
+test.readSettings('settings.txt')
 test.writeMachine()
 test.writeConfig()
 moveConfig()
 
-# be sure to run 'lininput-gestures-setup start' in this directory,
-# or errors will rise.
+# be sure to run 'libinput-gestures-input start' in this directory
+# or problems will rise
