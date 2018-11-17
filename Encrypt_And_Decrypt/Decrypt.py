@@ -20,9 +20,9 @@ def Decrypt(filename):
         wobj.write(data)     
 def Main(rootDir, Flag): 
     list_dirs = os.walk(rootDir) 
-    flag = 0;
+    flag = 0
     for root, dirs, files in list_dirs: 
-        flag = 1;
+        flag = 1
         if(files == []):
             print("No Files In The Current Directory")
         # 切换加密和解密过程
