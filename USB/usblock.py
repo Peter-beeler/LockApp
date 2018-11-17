@@ -7,8 +7,8 @@ from Encrypt import	Encrypt
 from Decrypt import	Decrypt
 from Decrypt import Work_Decrypt
 import random
-usbpath = "/Volumes"
-content = ['Macintosh HD', 'Untitled']
+usbpath = "/media/foenix"
+content = ['Ubuntu 18.0']
 
 def readcode(x):
 	codepath = usbpath + "/" + x + "/code/code.txt"
