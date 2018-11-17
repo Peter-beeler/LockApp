@@ -198,7 +198,7 @@ class photoWidget(QWidget):
         except NameError:
             pass
 
-def main():
+def test():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
