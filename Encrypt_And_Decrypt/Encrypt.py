@@ -10,7 +10,7 @@ def Encrypt(filename):
         data = f.read()
     with open(filename, 'wb') as out_file:
         # 收件人秘钥 - 公钥
-        recipient_key = RSA.import_key(open('Encrypt_And_Decrypt/my_public_rsa_key.pem').read())
+        recipient_key = RSA.import_key(open('my_public_rsa_key.pem').read())
         session_key = get_random_bytes(16)
         # Encrypt the session key with the public RSA key
         cipher_rsa = PKCS1_OAEP.new(recipient_key)

@@ -17,6 +17,7 @@ from pynput.keyboard import Listener
 flag = 0
 tmp_flag = 0
 
+
 def press(key):
 	global flag, tmp_flag
 	tmp_flag = tmp_flag + 1
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 			identify.TakePhoto("unknow.jpg")
 			x = identify.COMPARE("owner.jpg", "unknow.jpg")
 			if x == 0:
-				time.sleep(180)
+				time.sleep(2)
 				continue
 			else:
 				os.system("gnome-screensaver-command -l")
@@ -57,10 +58,8 @@ if __name__ == '__main__':
 				time.sleep(1)
 				flag = flag + 1
 				if flag > 4:
-					Work_Encrypt("/home/foenix/test")
+					Work_Encrypt("/home/eliasthunderdog/test")
 					Email = email("./mailViaPython/account.txt")
 					Email.sendMail()
 					break
 				continue
-
-

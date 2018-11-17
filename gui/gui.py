@@ -1,11 +1,18 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit, QVBoxLayout, QMessageBox
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
 from identify import TakePhoto, cutface
+from Make_Rsa_Key import CreateRSAKeys
 import cv2
 import json
+import time
+
+# TakePhoto = identify.TakePhoto
+# cutface = identify.cutface
 
 class App(QWidget):
  
@@ -17,14 +24,15 @@ class App(QWidget):
         self.setTextedit()
         self.setButton()
         self.SetLayout()
-        # self.cap = cv2.VideoCapture(0)
         self.initUI()
 
     def setButton(self):
         self.takePhoto = QPushButton('take photo')
         self.submit = QPushButton("save config")
+        self.createkeys = QPushButton('create keys')
         self.submit.clicked.connect(self.save_config)
         self.takePhoto.clicked.connect(self.getPhoto)
+        self.createkeys.clicked.connect(self.createKey)
 
     def setTextedit(self):
         self.textedit = QTextEdit()
@@ -33,18 +41,15 @@ class App(QWidget):
         self.hotkey = QLineEdit()
         self.passwd = QLineEdit()
         self.passwd.setEchoMode(QLineEdit.Password)
-
-    def setTimer(self):
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.start)
-        self.timer.start(100)
+        self.emailedit = QLineEdit()
 
     def setLabel(self):
         self.l = QLabel(self)
         self.l.setFixedSize(100, 100)
         self.hotkey_label = QLabel('hotkey')
         self.passwd_label = QLabel('passwd')
-        self.dirs = QLabel('directories:')
+        self.dirs = QLabel('directories')
+        self.emaillabel = QLabel('email')
 
     def SetLayout(self):
         grid = QGridLayout()
@@ -54,18 +59,14 @@ class App(QWidget):
         grid.addWidget(self.hotkey, 1, 1)
         grid.addWidget(self.passwd_label, 2, 0)
         grid.addWidget(self.passwd, 2, 1)
-        grid.addWidget(self.dirs, 3, 0)
-        grid.addWidget(self.textedit, 3, 1)
-        grid.addWidget(self.submit, 4, 0)
-        grid.addWidget(self.takePhoto, 4, 1)
+        grid.addWidget(self.emaillabel, 3, 0)
+        grid.addWidget(self.emailedit, 3, 1)
+        grid.addWidget(self.dirs, 4, 0)
+        grid.addWidget(self.textedit, 4, 1)
+        grid.addWidget(self.submit, 5, 0)
+        grid.addWidget(self.takePhoto, 5, 1)
+        grid.addWidget(self.createkeys)
         self.setLayout(grid)
-
-    def start(self):
-        ret, frame = self.cap.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        showImage = QImage(frame.data, frame.shape[1], frame.shape[0], QImage.Format_RGB888)
-        self.l.setPixmap(QPixmap.fromImage(showImage))
-        
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -93,12 +94,73 @@ class App(QWidget):
         f = open('config.json', 'w')
         f.write(m)
         f.close()
+        QMessageBox.information(self, '成功保存配置', '已成功保存您的配置特征')
 
     def getPhoto(self):
-        TakePhoto('rawface.jpg')
-        cutface('rawface.jpg')
+        self.camera = photoWidget()
 
-if __name__ == '__main__':
+    def createKey(self):
+        CreateRSAKeys()
+        info = '密钥生成成功，目录下的 my_private_rsa_key.bin为私钥，my_public_rsa_key.pem为公钥'
+        QMessageBox.information(self, '密钥构建成功', info, QMessageBox.Ok)
+
+
+class photoWidget(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.title = 'Camera'
+        self.takeButton = QPushButton('take photo')
+        self.takeButton.clicked.connect(self.takePhoto)
+        self.cameraLabel = QLabel(self)
+        layout = QVBoxLayout()
+        layout.addWidget(self.cameraLabel)
+        layout.addWidget(self.takeButton)
+        self.setLayout(layout)
+        # self.initCamera()
+        # self.setTimer
+        self.initUI()
+
+    def setTimer(self):
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.start)
+        self.timer.start(100)
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.show()
+        # self.takeButton.show()
+        self.initCamera()
+
+    def start(self):
+        # self.initCamera()
+        # self.setTimer()
+        # time.sleep(1)
+        ret, frame = self.cap.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        showImage = QImage(frame.data, frame.shape[1], frame.shape[0], QImage.Format_RGB888)
+        self.cameraLabel.setPixmap(QPixmap.fromImage(showImage))
+
+    def initCamera(self):
+        self.cap = cv2.VideoCapture(0)
+        self.setTimer()
+        # self.start()
+
+    def takePhoto(self):
+        TakePhoto(self.cap, 'rawface.jpg')
+        cutface('rawface.jpg')
+        QMessageBox.information(self, "图片采集成功", "已成功记录您的面部特征")
+
+    def __del__(self):
+        try:
+            self.cap.release()
+        except NameError:
+            pass
+
+def main():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
