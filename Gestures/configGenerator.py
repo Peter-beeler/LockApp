@@ -37,6 +37,7 @@ class gestureSettings:
 		machine.write('import sys\nimport os\n')
 		machine.write('mapping = ' + mappingList[self.num] + '\n')
 		machine.write('successState = ' + str(self.num) + '\n')
+		machine.write('sys.path.append(\'../locker\')\nsys.path.append(\'../BlueTooth\')\nfrom trylock import locker\nfrom dbus_1 import Query\n')
 		try:
 			tail = open('machineTail.py', 'r')
 		except IOError:
@@ -83,12 +84,13 @@ def moveConfig():
 		os.rename('libinput-gestures.conf', '/home/' + userName + '/.config/libinput-gestures.conf')
 
 # a example of config and machine generation
-stateInit()
-test = gestureSettings()
-test.readSettings('settings.txt')
-test.writeMachine()
-test.writeConfig()
-moveConfig()
+def init():
+	stateInit()
+	test = gestureSettings()
+	test.readSettings('settings.txt')
+	test.writeMachine()
+	test.writeConfig()
+	moveConfig()
 
 # be sure to run 'libinput-gestures-input start' in this directory
 # or problems will rise
