@@ -58,9 +58,5 @@ def COMPARE(owner,unknown):
 			return 0
 	print("fail")
 	return -1
-<<<<<<< HEAD:identify/identify.py
 # TakePhoto("/home/foenix/LockApp/owner.jpg")
-=======
-# TakePhoto("owner.jpg")
->>>>>>> new-skeleton:LockHub/identify/identify.py
 # cutface("owner.jpg")
