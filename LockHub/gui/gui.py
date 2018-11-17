@@ -5,8 +5,8 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, QTextEdit, QVBoxLayout, QMessageBox
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
-from identify import TakePhoto, cutface
-from Make_Rsa_Key import CreateRSAKeys
+from ..identify.identify import TakePhoto, cutface
+from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
 import cv2
 import json
 import time
