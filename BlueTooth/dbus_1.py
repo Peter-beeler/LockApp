@@ -8,3 +8,5 @@ def Query():
 
     props = eth0_dev_iface.GetActive()
     return props
+def test():
+	print("********")
