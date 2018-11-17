@@ -1,3 +1,5 @@
+
+
 import os
 
 class gestureSettings:
@@ -57,7 +59,7 @@ class gestureSettings:
 		config.write(headContent)
 		head.close()
 		for i in range(self.num):
-			config.write('gesture ' + self.list[i] + '\tpython3 ~/LockApp/Gestures/machine.py ' + str(i + 1) + '\n')
+			config.write('gesture ' + self.list[i] + '\tpython3 machine.py ' + str(i + 1) + '\n')
 		config.close()
 
 def stateInit():
@@ -89,5 +91,5 @@ test.writeMachine()
 test.writeConfig()
 moveConfig()
 
-# be sure to run 'lininput-gestures-setup start' in this directory,
-# or errors will rise.
+# be sure to run 'libinput-gestures-input start' in this directory
+# or problems will rise
