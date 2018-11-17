@@ -3,7 +3,7 @@ import time
 import pyautogui
 import subprocess
 import sys
-from dbus import Query
+from dbus_1 import Query
 sys.path.append("../locker")
 from config import config
 from trylock import locker
