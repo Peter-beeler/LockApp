@@ -4,7 +4,7 @@ from Cryptodome.Random import get_random_bytes
 from Cryptodome.Cipher import AES, PKCS1_OAEP
 import os
 import sys
-def Decrypt(filename):
+def Decrypt(filename,datakey):
     code = 'nooneknows'
     with open(filename, 'rb') as fobj:
         private_key = RSA.importKey(datakey, passphrase=code)

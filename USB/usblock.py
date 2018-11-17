@@ -11,9 +11,11 @@ usbpath = "/Volumes"
 content = ['Macintosh HD', 'Untitled']
 
 def readcode(x):
-	x = usbpath + "/" + x + "/code/code.txt"
-	Decrypt(x)
-	f = open(x)
+	codepath = usbpath + "/" + x + "/code/code.txt"
+	keypath = usbpath + "/" + x + "/code/my_private_rsa_key.bin"
+	data = open(keypath).read()
+	Decrypt(codepath,data)
+	f = open(codepath)
 	code = f.readline()
 	f.close()
 	return code
@@ -67,7 +69,7 @@ def usb_main():
 	#print(x)
 	#print(code)
 	rel,key = verification(code)
-	#print(rel)
+	print(rel)
 	newpasswd(key,usbpath + "/" + x + "/code/code.txt","key.txt")
 	return rel
 
@@ -84,3 +86,5 @@ def unlock(path):
 	x = usbpath + "/" + x + "/code/my_private_rsa_key.bin"
 	datakey =open(x).read()
 	Work_Decrypt(path,datakey)
+
+usb_main()
