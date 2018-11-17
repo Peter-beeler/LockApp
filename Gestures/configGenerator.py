@@ -8,9 +8,9 @@ class gestureSettings:
 	def setNumberOfsteps(self, num):
 		self.num = num
 	
-	def readSettings(self):
+	def readSettings(self, filePath):
 		try:
-			file = open('settings.txt', 'r')
+			file = open(filePath, 'r')
 		except IOError:
 			print("filed to open! (settings.txt)")
 			return -1
@@ -57,7 +57,7 @@ class gestureSettings:
 		config.write(headContent)
 		head.close()
 		for i in range(self.num):
-			config.write('gesture ' + self.list[i] + '\tpython3 machine.py ' + str(i + 1) + '\n')
+			config.write('gesture ' + self.list[i] + '\tpython3 ~/LockApp/Gestures/machine.py ' + str(i + 1) + '\n')
 		config.close()
 
 def stateInit():
@@ -84,7 +84,7 @@ def moveConfig():
 # a example of config and machine generation
 stateInit()
 test = gestureSettings()
-test.readSettings()
+test.readSettings('settings.txt')
 test.writeMachine()
 test.writeConfig()
 moveConfig()
