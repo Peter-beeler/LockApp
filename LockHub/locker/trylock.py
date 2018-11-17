@@ -2,7 +2,7 @@
 import os
 import pyautogui
 import time
-from config import config
+from .config import config
 
 class locker:
     

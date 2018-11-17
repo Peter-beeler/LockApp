@@ -4,6 +4,7 @@
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
+.gitignore
 __pycache__/
 *.py[cod]
 *$py.class
@@ -143,6 +144,8 @@ pip-selfcheck.json
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-.gitignore
+
 
 # End of https://www.gitignore.io/api/python,visualstudiocode
+*.jpg
+config.json

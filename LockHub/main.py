@@ -8,12 +8,12 @@ sys.path.append('./locker')
 sys.path.append('./identify')
 sys.path.append("./mailViaPython")
 sys.path.append('./BlueTooth')
-import identify
-from Encrypt import Work_Encrypt
-from trylock import locker
-from mail import email
-from config import config
-from dbus_1 import Query
+from .identify import identify
+from .Encrypt_And_Decrypt.Encrypt import Work_Encrypt
+from .locker.trylock import locker
+from.mailViaPython.mail import email
+from .locker.config import config
+from .BlueTooth.dbus_1 import Query
 from pynput.keyboard import Listener
 
 flag = 0

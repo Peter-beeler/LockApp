@@ -8,7 +8,8 @@ from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
 from ..identify.identify import TakePhoto, cutface
 from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
-from ..Encrypt_And_Decrypt.Decrypt import work_decrypt
+from ..Encrypt_And_Decrypt.Decrypt import Work_Decrypt
+from ..main import Face
 import cv2
 import json
 import time
@@ -135,12 +136,12 @@ class App(QWidget):
         f_list = config['protectDir']
         try:
             for filedir in f_list:
-                work_decrypt(filedir)
+                Work_Decrypt(filedir)
         except FileNotFoundError:
             QMessageBox.critical(self, '错误', '找不到文件，无法对其解密')
 
     def runapp(self):
-        pass
+        Face()
     
     def stopapp(self):
         pass
@@ -188,8 +189,14 @@ class photoWidget(QWidget):
         # self.start()
 
     def takePhoto(self):
-        TakePhoto(self.cap, 'rawface.jpg')
-        cutface('rawface.jpg')
+        ret, frame = self.cap.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        if ret:
+            cv2.imwrite('owner.jpg', frame)
+        else:
+            print('can\'t get frame')
+        if cutface('owner.jpg') == -1:
+            print('cut error')
         QMessageBox.information(self, "图片采集成功", "已成功记录您的面部特征")
 
     def __del__(self):
