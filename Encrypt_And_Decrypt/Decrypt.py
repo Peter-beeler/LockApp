@@ -18,34 +18,11 @@ def Decrypt(filename):
     
     with open(filename, 'wb') as wobj:
         wobj.write(data)     
-def Main(rootDir, Flag): 
+def Work_Decrypt(rootDir): 
     list_dirs = os.walk(rootDir) 
-    flag = 0
     for root, dirs, files in list_dirs: 
-        flag = 1
-        if(files == []):
-            print("No Files In The Current Directory")
-        # 切换加密和解密过程
-        if(Flag == "decrypt"):   
-            # 遍历文件，解密
+        if True:   
             for f in files: 
                 filename = os.path.join(root, f)
                 print("Decrypt the file: " + filename)
                 Decrypt(filename)
-        else:
-            print("Wrong parameters")
-            return
-    if(flag == 0):
-        print("Current Directory Does Not Exist")
-            
-if __name__ == '__main__':
-    #CreateRSAKeys()
-    if(len(sys.argv) > 2): 
-        d = sys.argv[2]
-        Flag = sys.argv[1]
-        if(Flag == 'decrypt'):
-            Main(d, Flag)
-        else: print("Wrong parameters")
-    elif(len(sys.argv) == 2):
-        print("Miss address or command:'decrypt'")
-    else: print("Miss address and command:'decrypt'")
