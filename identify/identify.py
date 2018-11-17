@@ -58,5 +58,5 @@ def COMPARE(owner,unknown):
 			return 0
 	print("fail")
 	return -1
-TakePhoto("owner.jpg")
+# TakePhoto("/home/foenix/LockApp/owner.jpg")
 # cutface("owner.jpg")
