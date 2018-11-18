@@ -9,9 +9,10 @@ from config import config
 from trylock import locker
 
 
-def Start_BlueTooth():
+# def Start_BlueTooth():
+if __name__ == "__main__":
 	while True:
-		time.sleep(10)
+		time.sleep(3)
 		number = config['number']
 		os.system("sudo hciconfig hci0 up")
 		x = subprocess.check_output(['sudo','hcitool', 'cc', number], stderr=subprocess.STDOUT)

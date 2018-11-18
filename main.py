@@ -33,7 +33,8 @@ def press(key):
 		l.lock_workstation()
 		return False
 
-def Face():
+# def Face():
+if __name__ == "__main__":
 	while True:
 		# lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
 		# print(str(lzy))
