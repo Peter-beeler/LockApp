@@ -16,8 +16,6 @@ if __name__ == '__main__':
 			continue
 		else:#lock
 			time.sleep(1)
-			print("************")
-			tmp = 0
 			tmp = subprocess.check_output(['sudo', 'python3', 'usblock.py'])
 			l = str(tmp)
 			if(l[2] == 'T'):
@@ -26,7 +24,6 @@ if __name__ == '__main__':
 			else:
 				rel = l[2:7]
 				path = l[8:-3]
-			print("l = %s" % l)
 			if ("True" in l):
 				l = locker()
 				l.unlock_workstation()
