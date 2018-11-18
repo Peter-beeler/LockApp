@@ -9,15 +9,15 @@ from email.mime.multipart import MIMEMultipart
 from ..global_api.loadconfig import load_config
 
 class email:
-    def __init__(self):
-        self.sender = ''
-        self.password = ''
-        self.receiver = ''
-        self.server = ''
-        self.serverPort = ''
-        self.subject = ''
-        self.text = ''
-        self.picture = ''
+#     def __init__(self):
+#         self.sender = ''
+#         self.password = ''
+#         self.receiver = ''
+#         self.server = ''
+#         self.serverPort = ''
+#         self.subject = ''
+#         self.text = ''
+#         self.picture = ''
 
     def __init__(self, filePath):
         config = load_config()
@@ -28,6 +28,7 @@ class email:
             self.sender = accountInfo[2]
             self.password = accountInfo[3]
             self.receiver = config['email']
+            print(self.receiver)
             self.subject = accountInfo[5]
             self.text = accountInfo[6]
             self.picture = accountInfo[7]
@@ -43,6 +44,7 @@ class email:
         server = smtplib.SMTP_SSL(self.server, self.serverPort)
         server.login(self.sender, self.password)
         server.sendmail(self.sender, self.receiver, msg.as_string())
+        print('email sent')
 
 # newMail = email("account.txt")
 # newMail.sendMail()

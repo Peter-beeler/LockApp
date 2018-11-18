@@ -5,4 +5,4 @@ zqlilbtutffjchif
 zh2016@mail.ustc.edu.cn
 This is the first test
 This is the first test's content
-/home/eliasthunderdog/LockApp/unknow.jpg
+./unknow.jpg

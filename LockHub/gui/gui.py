@@ -11,6 +11,7 @@ from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
 from ..Encrypt_And_Decrypt.Decrypt import Work_Decrypt
 from ..face_rec import Face
 from ..BlueTooth.BlueTooth import Start_BlueTooth
+from ..Gestures import gesturesGo
 import cv2
 import json
 import time
@@ -110,12 +111,14 @@ class App(QWidget):
         dirs = self.textedit.toPlainText()
         bluetooth_num = self.number.text()
         dirs = dirs.split('\n')
+        email_addr = self.emailedit.text()
         # print(hotkey_s)
         # print(passwd_s)
         # print(dirs)
         config = {
             'lock': hotkey_s,
             'unlockPasswd': passwd_s,
+            'email': email_addr,
             'protectDir': dirs,
             'bluetooth_num': bluetooth_num,
         }
@@ -151,7 +154,7 @@ class App(QWidget):
         if self.faceidentify.isChecked():
             Face()
         elif self.gesture.isChecked():
-            pass
+            gesturesGo.gesturesGo()
         elif self.bluetooth.isChecked():
             Start_BlueTooth()
     

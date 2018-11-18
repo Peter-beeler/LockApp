@@ -1,5 +1,3 @@
-
-
 import os
 
 class gestureSettings:
@@ -31,14 +29,15 @@ class gestureSettings:
 	
 	def writeMachine(self):
 		mappingList = ['', '[[0, 1, 2]]', '[[0, 1, 0, 3], [0, 1, 2, 3]]', '[[0, 1, 0, 0, 4], [0, 1, 2, 0, 4], [0, 1, 0, 3, 4]]']
-		if os.path.exists("machine.py"):
-			os.remove("machine.py")
-		machine = open("machine.py", 'w+')
+		if os.path.exists("./machine.py"):
+			os.remove("./machine.py")
+		machine = open("./machine.py", 'w+')
 		machine.write('import sys\nimport os\n')
 		machine.write('mapping = ' + mappingList[self.num] + '\n')
 		machine.write('successState = ' + str(self.num) + '\n')
+		machine.write('sys.path.append(\'../locker\')\nsys.path.append(\'../BlueTooth\')\nfrom trylock import locker\nfrom dbus_1 import Query\n')
 		try:
-			tail = open('machineTail.py', 'r')
+			tail = open('./machineTail.py', 'r')
 		except IOError:
 			print("filed to open! (machineTail.py)")
 			return -1
@@ -50,10 +49,10 @@ class gestureSettings:
 		return 0
 
 	def writeConfig(self):
-		if os.path.exists("libinput-gestures.conf"):
-			os.remove("libinput-gestures.conf")
-		config = open("libinput-gestures.conf", 'w+')
-		head = open('libinput-gesturesHead.conf', 'r')
+		if os.path.exists("./libinput-gestures.conf"):
+			os.remove("./libinput-gestures.conf")
+		config = open("./libinput-gestures.conf", 'w+')
+		head = open('./libinput-gesturesHead.conf', 'r')
 		headContent = head.read()
 		config.write(headContent)
 		head.close()
@@ -63,13 +62,13 @@ class gestureSettings:
 
 def stateInit():
 	""" initialize state to 0 """
-	if os.path.exists("state.txt"):
-		state = open('state.txt', 'r+')
+	if os.path.exists("./state.txt"):
+		state = open('./state.txt', 'r+')
 		state.seek(0)
 		state.write('0')
 		state.close()
 	else:
-		state = open('state.txt', 'w+')
+		state = open('./state.txt', 'w+')
 		state.write('0')
 		state.close()
 
@@ -79,16 +78,17 @@ def moveConfig():
 	# change userName before use
 	userName = 'fere'
 	# change userName before use
-	if os.path.exists("libinput-gestures.conf"):
-		os.rename('libinput-gestures.conf', '/home/' + userName + '/.config/libinput-gestures.conf')
+	if os.path.exists("./libinput-gestures.conf"):
+		os.rename('./libinput-gestures.conf', '/home/' + userName + '/.config/libinput-gestures.conf')
 
 # a example of config and machine generation
-stateInit()
-test = gestureSettings()
-test.readSettings('settings.txt')
-test.writeMachine()
-test.writeConfig()
-moveConfig()
+def init():
+	stateInit()
+	test = gestureSettings()
+	test.readSettings('./settings.txt')
+	test.writeMachine()
+	test.writeConfig()
+	moveConfig()
 
 # be sure to run 'libinput-gestures-input start' in this directory
 # or problems will rise

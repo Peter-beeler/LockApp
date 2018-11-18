@@ -1,3 +1,11 @@
+import sys
+import os
+mapping = [[0, 1, 0, 3], [0, 1, 2, 3]]
+successState = 2
+sys.path.append('../locker')
+sys.path.append('../BlueTooth')
+from trylock import locker
+from dbus_1 import Query
 gesCode = int(sys.argv[1])
 
 with open("state.txt", 'r+') as f:
