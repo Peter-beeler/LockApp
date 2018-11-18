@@ -40,6 +40,7 @@ def press(key):
 def Face():
 	fail_time = 0
 	flag = 0
+	the_config = load_config()
 	while True:
 		# lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
 		# print(str(lzy))
@@ -75,7 +76,9 @@ def Face():
 				time.sleep(1)
 				flag = flag + 1
 				if flag > 4:
-					Work_Encrypt("/home/foenix/test")
+					dirs = config['protectDir']
+					for dir in dirs:
+						Work_Encrypt(dir)
 					Email = email("./LockHub/mailViaPython/account.txt")
 					Email.sendMail()
 					flag = 0

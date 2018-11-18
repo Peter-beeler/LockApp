@@ -146,7 +146,8 @@ class App(QWidget):
         f_list = config['protectDir']
         try:
             for filedir in f_list:
-                Work_Decrypt(filedir)
+                pass
+                # Work_Decrypt(filedir, )
         except FileNotFoundError:
             QMessageBox.critical(self, '错误', '找不到文件，无法对其解密')
 
