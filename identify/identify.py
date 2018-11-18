@@ -8,7 +8,7 @@ import pyautogui
 
 def numberof(photopath):
 	image = face_recognition.load_image_file(photopath)
-	face_locations = face_recognition.face_locations(image,model = "cnn")
+	face_locations = face_recognition.face_locations(image)
 	return len(face_locations)
 
 def cutface(photopath):

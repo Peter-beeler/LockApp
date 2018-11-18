@@ -1,5 +1,6 @@
 from time import sleep
-import os,shutil
+import os,shutil,time
+import subprocess
 import pyotp
 import sys
 sys.path.append('../Encrypt_And_Decrypt')
@@ -54,27 +55,50 @@ def newpasswd(key,usbfile,localfile,keydata):
 	Encrypt(usbfile)
 	return 0
 
-def usb_main():
-	while(1):
-		new_content = os.listdir(usbpath)
-		if(new_content == content):
-			continue
+# def usb_main():
+if __name__ == "__main__":
+	# print("-----------")
+	os.chdir('/proc/scsi')
+	while True:
+		time.sleep(1)
+		tmp = subprocess.check_output(['ls'])
+		lzy = str(tmp)
+		if('usb-storage' in lzy):
+			break
 		else:
-			break
-	for x in new_content:
-		if(not(x in content)):
-			break
-	sleep(3)
+			continue
+	time.sleep(1)
+	os.chdir('usb-storage')
+	# os.system('ls')
+	time.sleep(1)
+	tmp = subprocess.check_output(['ls'])
+	# print(tmp)
+	l = str(tmp)[2:3]
+	# print('l = %s' % l)
+	time.sleep(1)
+	if l=='1':
+		os.system("mount -t vfat /dev/sda4 /media/foenix/tmp")
+	elif l=='2':
+		os.system("mount -t vfat /dev/sdb4 /media/foenix/tmp")
+	else:
+		os.system("mount -t vfat /dev/sdc4 /media/foenix/tmp")
+
+	time.sleep(3)
+	# print(x)
+	x = 'tmp'
+	# os.chdir(x)
+	# os.system("ls")
 	code,data = readcode(x)
-	#print(x)
-	#print(code)
+	os.chdir("/home/foenix/LockApp/USB")
 	rel,key = verification(code)
-	print(rel)
+	print(rel, end = ' ')
 	newpasswd(key,usbpath + "/" + x + "/code/code.txt","key.txt",data)
-	return rel,usbpath + '/' + x
+	# return rel,usbpath + '/' + x
+	# print(rel)
+	print(usbpath + '/' + x)
 
 def unlock(filepath,codepath):
 	x = codepath + "/code/my_private_rsa_key.bin"
 	datakey =open(x).read()
 	Work_Decrypt(filepath,datakey)
-
+	
