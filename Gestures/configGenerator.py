@@ -92,3 +92,11 @@ def init():
 
 # be sure to run 'libinput-gestures-input start' in this directory
 # or problems will rise
+
+# add this for ease of demo 
+stateInit()
+test = gestureSettings()
+test.readSettings('./settings.txt')
+test.writeMachine()
+test.writeConfig()
+moveConfig()
