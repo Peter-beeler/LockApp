@@ -4,15 +4,16 @@ import pyautogui
 import subprocess
 import sys
 from dbus_1 import Query
-sys.path.append("../locker")
-from config import config
-from trylock import locker
+from ..global_api.loadconfig import load_config
+from ..locker.trylock import locker
 
 
+# def Start_BlueTooth():
 def Start_BlueTooth():
+	config = load_config()
 	while True:
-		time.sleep(10)
-		number = config['number']
+		time.sleep(3)
+		number = config['bluetooth_num']
 		os.system("sudo hciconfig hci0 up")
 		x = subprocess.check_output(['sudo','hcitool', 'cc', number], stderr=subprocess.STDOUT)
 		# lzy = subprocess.check_output(['gnome-screensaver-command', '-q'])

@@ -10,6 +10,7 @@ from ..identify.identify import TakePhoto, cutface
 from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
 from ..Encrypt_And_Decrypt.Decrypt import Work_Decrypt
 from ..face_rec import Face
+from ..BlueTooth.BlueTooth import Start_BlueTooth
 import cv2
 import json
 import time
@@ -52,6 +53,7 @@ class App(QWidget):
         self.passwd = QLineEdit()
         self.passwd.setEchoMode(QLineEdit.Password)
         self.emailedit = QLineEdit()
+        self.number = QLineEdit()
 
     def setCheckBox(self):
         self.faceidentify = QRadioButton('face recognition')
@@ -66,6 +68,7 @@ class App(QWidget):
         self.dirs = QLabel('directories')
         self.emaillabel = QLabel('email')
         self.functionlabel = QLabel('function')
+        self.bluetoothnum = QLabel('bluetooth hardware number')
 
     def SetLayout(self):
         grid = QGridLayout()
@@ -79,14 +82,16 @@ class App(QWidget):
         grid.addWidget(self.emailedit, 3, 1)
         grid.addWidget(self.dirs, 4, 0)
         grid.addWidget(self.textedit, 4, 1)
-        grid.addWidget(self.submit, 5, 0)
-        grid.addWidget(self.takePhoto, 5, 1)
-        grid.addWidget(self.createkeys, 6, 0)
-        grid.addWidget(self.decrypt, 6, 1)
-        grid.addWidget(self.functionlabel, 7, 0)
-        grid.addWidget(self.faceidentify, 7, 1)
-        grid.addWidget(self.gesture, 8, 1)
-        grid.addWidget(self.bluetooth, 9, 1)
+        grid.addWidget(self.bluetoothnum, 5, 0)
+        grid.addWidget(self.number, 5, 1)
+        grid.addWidget(self.submit, 6, 0)
+        grid.addWidget(self.takePhoto, 6, 1)
+        grid.addWidget(self.createkeys, 7, 0)
+        grid.addWidget(self.decrypt, 7, 1)
+        grid.addWidget(self.functionlabel, 8, 0)
+        grid.addWidget(self.faceidentify, 8, 1)
+        grid.addWidget(self.gesture, 9, 1)
+        grid.addWidget(self.bluetooth, 10, 1)
         grid.addWidget(self.run)
         grid.addWidget(self.stop)
         self.setLayout(grid)
@@ -103,6 +108,7 @@ class App(QWidget):
         hotkey_s = hotkey_s.split(',')
         passwd_s = self.passwd.text()
         dirs = self.textedit.toPlainText()
+        bluetooth_num = self.number.text()
         dirs = dirs.split('\n')
         # print(hotkey_s)
         # print(passwd_s)
@@ -111,6 +117,7 @@ class App(QWidget):
             'lock': hotkey_s,
             'unlockPasswd': passwd_s,
             'protectDir': dirs,
+            'bluetooth_num': bluetooth_num,
         }
         m = json.dumps(config)
 
@@ -146,7 +153,7 @@ class App(QWidget):
         elif self.gesture.isChecked():
             pass
         elif self.bluetooth.isChecked():
-            pass
+            Start_BlueTooth()
     
     def stopapp(self):
         pass
