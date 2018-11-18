@@ -58,19 +58,19 @@ def TakePhoto(filename): #
 
 def COMPARE(owner,unknown):
 	known_image = face_recognition.load_image_file(owner)#读入图片文件
-	print(known_image)
+	# print(known_image)
 	unknown_image = face_recognition.load_image_file(unknown)
+	try:
+		owner_encoding = face_recognition.face_encodings(known_image)[0] #encode
+		unknown_encoding = face_recognition.face_encodings(unknown_image)
+	except:
+		print("There is no face in the image")
+		return -1
 	# try:
 	# 	owner_encoding = face_recognition.face_encodings(known_image)[0] #encode
-	# 	unknown_encoding = face_recognition.face_encodings(unknown_image)
-	# except:
-	# 	print("There is no face in the image")
-	# 	return -1
-	# try:
-	owner_encoding = face_recognition.face_encodings(known_image)[0] #encode
 	# except IndexError:
-		# print(owner_encoding)
-	unknown_encoding = face_recognition.face_encodings(unknown_image)
+	# 	print(owner_encoding)
+	# unknown_encoding = face_recognition.face_encodings(unknown_image)
 	for x in range(len(unknown_encoding)):
 		results = face_recognition.compare_faces([owner_encoding], unknown_encoding[x], 0.4)
 		if(True in results):

@@ -1,3 +1,6 @@
+# 要改的东西：
+# 1. 加密目录的获取方式
+# 2. 加密的逻辑规则
 import sys
 import os
 import time
@@ -15,6 +18,7 @@ from.mailViaPython.mail import email
 from .locker.config import config
 from .BlueTooth.dbus_1 import Query
 from pynput.keyboard import Listener
+from .global_api.loadconfig import load_config
 
 flag = 0
 tmp_flag = 0
@@ -34,19 +38,26 @@ def press(key):
 		return False
 
 def Face():
+	fail_time = 0
+	flag = 0
 	while True:
 		# lzy = subprocess.check_output(['gnome-screensaver-command','-q'])
 		# print(str(lzy))
-		lzy = Query()
-		if(lzy == 0):#unlock
+		status = Query()
+		if(status == 0):#unlock
 			identify.TakePhoto("unknow.jpg")
 			x = identify.COMPARE("owner.jpg", "unknow.jpg")
 			if x == 0:
 				time.sleep(2)
+				fail_time = 0
 				continue
 			else:
-				l = locker()
-				l.lock_workstation()
+				fail_time += 1
+				print(fail_time)
+				if(fail_time == 5):
+					l = locker()
+					l.lock_workstation()
+					fail_time = 0
 		else:#lock
 			with Listener(on_press = press) as listener:					
 				listener.join()
@@ -65,7 +76,8 @@ def Face():
 				flag = flag + 1
 				if flag > 4:
 					Work_Encrypt("/home/foenix/test")
-					Email = email("./mailViaPython/account.txt")
+					Email = email()
 					Email.sendMail()
+					flag = 0
 					break
 				continue

@@ -1,11 +1,12 @@
 # environment: Python 3.7.0
 # add the account info in account.txt under the same folder
-
+# 要改的东西：用户名和密码
 import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+from ..global_api.loadconfig import load_config
 
 class email:
     def __init__(self):
@@ -19,13 +20,14 @@ class email:
         self.picture = ''
 
     def __init__(self, filePath):
+        config = load_config()
         with open(filePath, 'r') as account:
             accountInfo = account.read().split('\n')
             self.server = accountInfo[0]
             self.serverPort = accountInfo[1]
             self.sender = accountInfo[2]
             self.password = accountInfo[3]
-            self.receiver = accountInfo[4]
+            self.receiver = config['email']
             self.subject = accountInfo[5]
             self.text = accountInfo[6]
             self.picture = accountInfo[7]

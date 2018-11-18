@@ -9,7 +9,7 @@ from PyQt5 import QtCore
 from ..identify.identify import TakePhoto, cutface
 from ..Encrypt_And_Decrypt.Make_Rsa_Key import CreateRSAKeys
 from ..Encrypt_And_Decrypt.Decrypt import Work_Decrypt
-from ..main import Face
+from ..face_rec import Face
 import cv2
 import json
 import time
@@ -153,26 +153,32 @@ class photoWidget(QWidget):
         super().__init__()
         self.title = 'Camera'
         self.takeButton = QPushButton('take photo')
+        self.quitButton = QPushButton('close')
         self.takeButton.clicked.connect(self.takePhoto)
+        self.quitButton.clicked.connect(self.stop_camera)
         self.cameraLabel = QLabel(self)
         layout = QVBoxLayout()
         layout.addWidget(self.cameraLabel)
         layout.addWidget(self.takeButton)
+        layout.addWidget(self.quitButton)
         self.setLayout(layout)
         # self.initCamera()
         # self.setTimer
         self.initUI()
 
     def setTimer(self):
-        self.timer = QtCore.QTimer()
+        self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.start)
         self.timer.start(100)
+        # self.timer.stop()
 
     def initUI(self):
         self.setWindowTitle(self.title)
         self.show()
         # self.takeButton.show()
-        self.initCamera()
+        self.cap = cv2.VideoCapture(0)
+        self.setTimer()
+        # self.initCamera()
 
     def start(self):
         # self.initCamera()
@@ -182,11 +188,15 @@ class photoWidget(QWidget):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         showImage = QImage(frame.data, frame.shape[1], frame.shape[0], QImage.Format_RGB888)
         self.cameraLabel.setPixmap(QPixmap.fromImage(showImage))
+        # self.cap.release()
 
-    def initCamera(self):
-        self.cap = cv2.VideoCapture(0)
-        self.setTimer()
+    # def initCamera(self):
         # self.start()
+    def stop_camera(self):
+        self.timer.stop()
+        print('stopped')
+        self.cap.release()
+        self.close()
 
     def takePhoto(self):
         ret, frame = self.cap.read()
@@ -204,6 +214,13 @@ class photoWidget(QWidget):
             self.cap.release()
         except NameError:
             pass
+
+    def close(self):
+        try:
+            self.cap.release()
+        except NameError:
+            pass
+        self.destroy()
 
 def test():
     app = QApplication(sys.argv)
