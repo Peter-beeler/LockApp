@@ -76,7 +76,7 @@ def stateInit():
 def moveConfig():
 	""" move config file to right directory """
 	# change userName before use
-	userName = 'fere'
+	userName = 'foenix'
 	# change userName before use
 	if os.path.exists("./libinput-gestures.conf"):
 		os.rename('./libinput-gestures.conf', '/home/' + userName + '/.config/libinput-gestures.conf')
@@ -92,3 +92,11 @@ def init():
 
 # be sure to run 'libinput-gestures-input start' in this directory
 # or problems will rise
+
+# add this for ease of demo 
+stateInit()
+test = gestureSettings()
+test.readSettings('./settings.txt')
+test.writeMachine()
+test.writeConfig()
+moveConfig()
