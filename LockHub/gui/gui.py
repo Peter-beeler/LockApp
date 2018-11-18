@@ -3,7 +3,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QGridLayout, QLabel, \
-QTextEdit, QVBoxLayout, QMessageBox, QCheckBox
+QTextEdit, QVBoxLayout, QMessageBox, QCheckBox, QRadioButton
 from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5 import QtCore
 from ..identify.identify import TakePhoto, cutface
@@ -54,9 +54,9 @@ class App(QWidget):
         self.emailedit = QLineEdit()
 
     def setCheckBox(self):
-        self.faceidentify = QCheckBox('face recognition')
-        self.gesture = QCheckBox('gesture on touchpad')
-        self.usbunlock = QCheckBox('usb unlock')
+        self.faceidentify = QRadioButton('face recognition')
+        self.gesture = QRadioButton('gesture on touchpad')
+        self.bluetooth = QRadioButton('blue tooth lock')
 
     def setLabel(self):
         self.l = QLabel(self)
@@ -86,7 +86,7 @@ class App(QWidget):
         grid.addWidget(self.functionlabel, 7, 0)
         grid.addWidget(self.faceidentify, 7, 1)
         grid.addWidget(self.gesture, 8, 1)
-        grid.addWidget(self.usbunlock, 9, 1)
+        grid.addWidget(self.bluetooth, 9, 1)
         grid.addWidget(self.run)
         grid.addWidget(self.stop)
         self.setLayout(grid)
@@ -141,7 +141,12 @@ class App(QWidget):
             QMessageBox.critical(self, '错误', '找不到文件，无法对其解密')
 
     def runapp(self):
-        Face()
+        if self.faceidentify.isChecked():
+            Face()
+        elif self.gesture.isChecked():
+            pass
+        elif self.bluetooth.isChecked():
+            pass
     
     def stopapp(self):
         pass
